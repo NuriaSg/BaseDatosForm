@@ -2,12 +2,20 @@
 @inject IProductService ProductService
 @inject NavigationManager NavigationManager
 
+
+<style>
+    #header{
+        background-color: lightblue;
+    }
+
+</style>
+
 <PageTitle>Products</PageTitle>
 <h3>Products</h3>
 
 <table class="table">
     <thead>
-        <tr>
+        <tr id="header">
             <th>Title</th>
             <th>Description</th>
             <th>Price</th>
@@ -29,7 +37,7 @@
         }
     </tbody>
 </table>
-
+<button class="btn btn-primary" @onclick="CreateProduct">Create new product</button>
 
 @code {
     protected override async Task OnInitializedAsync()
@@ -40,5 +48,10 @@
     void ShowProduct(int id)
     {
         NavigationManager.NavigateTo($"product/{id}");
+    }
+
+    void CreateProduct()
+    {
+        NavigationManager.NavigateTo("/product");
     }
 }

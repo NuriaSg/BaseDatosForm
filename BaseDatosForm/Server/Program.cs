@@ -1,4 +1,7 @@
 global using BaseDatosForm.Shared;
+global using Microsoft.EntityFrameworkCore;
+global using BaseDatosForm.Server.Data;
+
 using Microsoft.AspNetCore.ResponseCompression;
 
 
@@ -8,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

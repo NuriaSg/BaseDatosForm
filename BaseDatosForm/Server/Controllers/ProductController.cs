@@ -9,63 +9,86 @@ namespace BaseDatosForm.Server.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+		private readonly DataContext _context;
 
-        public static List<Category> category = new List<Category>{
-          new Category{Id=1, Name= "Square Cubes"},
-          new Category{Id=2, Name= "Triangular Cubes"},
-          new Category{Id=3, Name= "Special Cubes"}
-        };
-    
-        public static List<Product> products = new List<Product>{
-          new Product{Id=1, Title= "Classic Rubik's Cube", 
-              Description="The Rubik's Cube is a three-dimensional mechanical puzzle created by Hungarian sculptor and architecture professor Ernő Rubik in 1974.", 
-              Price=9.99m,
-              Category = category[0]
-          },
-
-          new Product{
-                    Id = 2,
-                    Title = "Pyraminx",
-                    Description = "The Pyraminx is a mechanical puzzle shaped like a tetrahedron similar to a Rubik's cube. It was invented by Uwe Meffert in 1970.",
-                    Price = 7.99m,
-                    Category = category[1]
-          },
-          new Product{
-                    Id = 3,
-                    Title = "Skewb",
-                    Description = "The Skewb is a three-dimensional mechanical puzzle like a Rubik's cube, made up of pieces that can rotate and change position.",
-                    Price = 9.99m,
-                    Category = category[2]
-
-                },
-          new Product{
-                    Id = 4,
-                    Title = "Megaminx",
-                    Description = "The Megaminx, or \"Magic Dodecahedron\", was invented by several people simultaneously and produced by different manufacturing companies with slightly different designs.\r\nThe Megaminx has the shape of a dodecahedron, it has 12 central pieces, one on each face; 20 corners and 30 edges.",
-                    Price = 20.99m,
-                    Category = category[2]
-
-                },
-
-        };
+		public ProductController(DataContext context)
+        {
+			_context = context;
+		}
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
+            var products= await _context.Products.Include(sh => sh.Category).ToListAsync();
             return Ok(products);
         }
 
+		[HttpGet("category")]
+		public async Task<ActionResult<List<Product>>> GetCategories()
+		{
+			var categories = await _context.Categories.ToListAsync();
+			return Ok(categories);
+		}
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetOneProduct(int id)
-        {
-            var product= products.FirstOrDefault(h => h.Id == id);
-            if (product == null)
+		[HttpGet("{id}")]
+		public async Task<ActionResult<Product>> GetOneProduct(int id)
+		{
+			var result = await _context.Products
+				.Include(h => h.Category)
+				.FirstOrDefaultAsync(c => c.Id == id);
+            if (result == null)
             {
-                return NotFound("No product here");
+                return NotFound("Sorry, no product here. :/");
             }
-            return Ok(products);
+            return Ok(result);
         }
 
-    }
+		[HttpPost]
+		public async Task<ActionResult<List<Product>>> CreateProduct(Product product)
+		{
+			product.Category = null;
+			_context.Products.Add(product);
+			await _context.SaveChangesAsync();
+			return Ok(await GetDbProducts());
+		}
+
+		[HttpPut("{id}")]
+		public async Task<ActionResult<List<Product>>> UpdateProduct(Product product, int id)
+		{
+			var dbproduct = await _context.Products
+			.Include(h => h.Category)
+			.FirstOrDefaultAsync(h => h.Id == id);
+			if(dbproduct == null)
+				return NotFound("Product not found");
+
+			dbproduct.Title = product.Title;
+			dbproduct.Description = product.Description;
+			dbproduct.Price = product.Price;
+			dbproduct.CategoryId = product.CategoryId;
+
+			await _context.SaveChangesAsync();
+			return Ok(await GetDbProducts());
+		}
+
+
+		[HttpDelete("{id}")]
+		public async Task<ActionResult<List<Product>>> DeleteProduct(int id)
+		{
+			var dbproduct = await _context.Products
+			.Include(h => h.Category)
+			.FirstOrDefaultAsync(h => h.Id == id);
+			if (dbproduct == null)
+				return NotFound("Product not found");
+
+			_context.Products.Remove(dbproduct);
+
+			await _context.SaveChangesAsync();
+			return Ok(await GetDbProducts());
+		}
+
+		private async Task<List<Product>> GetDbProducts()
+		{
+			return await _context.Products.Include(sh => sh.Category).ToListAsync();
+		}
+	}
 }

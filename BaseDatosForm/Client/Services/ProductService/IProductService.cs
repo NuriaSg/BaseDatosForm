@@ -9,5 +9,8 @@ namespace BaseDatosForm.Client.Services.ProductService
         Task GetCategories();
         Task GetProducts();
         Task<Product> GetOneProduct(int id);
+        Task CreateProduct(Product product);
+        Task UpdateProduct(Product product);
+        Task DeleteProduct(int id);
     }
 }
