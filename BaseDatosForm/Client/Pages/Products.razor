@@ -1,11 +1,11 @@
-﻿
-@page "/products"
+﻿@page "/products"
 @inject IProductService ProductService
+@inject NavigationManager NavigationManager
 
 <PageTitle>Products</PageTitle>
 <h3>Products</h3>
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>Title</th>
@@ -15,14 +15,18 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var product in ProductService.Products){
+        @foreach (var product in ProductService.Products)
+        {
             <tr>
                 <td>@product.Title</td>
                 <td>@product.Description</td>
                 <td>@product.Price</td>
                 <td>@product.Category.Name</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="(() => ShowProduct(product.Id))"><i class="oi oi-pencil"></i></button>
+                </td>
             </tr>
-    }
+        }
     </tbody>
 </table>
 
@@ -31,5 +35,10 @@
     protected override async Task OnInitializedAsync()
     {
         await ProductService.GetProducts();
+    }
+
+    void ShowProduct(int id)
+    {
+        NavigationManager.NavigateTo($"product/{id}");
     }
 }

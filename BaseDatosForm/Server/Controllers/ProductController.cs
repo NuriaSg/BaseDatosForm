@@ -17,11 +17,10 @@ namespace BaseDatosForm.Server.Controllers
         };
     
         public static List<Product> products = new List<Product>{
-          new Product{
-              Id=1, Title= "Classic Rubik's Cube", 
+          new Product{Id=1, Title= "Classic Rubik's Cube", 
               Description="The Rubik's Cube is a three-dimensional mechanical puzzle created by Hungarian sculptor and architecture professor Ernő Rubik in 1974.", 
               Price=9.99m,
-              Category = category[1]
+              Category = category[0]
           },
 
           new Product{
@@ -29,14 +28,14 @@ namespace BaseDatosForm.Server.Controllers
                     Title = "Pyraminx",
                     Description = "The Pyraminx is a mechanical puzzle shaped like a tetrahedron similar to a Rubik's cube. It was invented by Uwe Meffert in 1970.",
                     Price = 7.99m,
-                    Category = category[2]
+                    Category = category[1]
           },
           new Product{
                     Id = 3,
                     Title = "Skewb",
                     Description = "The Skewb is a three-dimensional mechanical puzzle like a Rubik's cube, made up of pieces that can rotate and change position.",
                     Price = 9.99m,
-                    Category = category[3]
+                    Category = category[2]
 
                 },
           new Product{
@@ -44,7 +43,7 @@ namespace BaseDatosForm.Server.Controllers
                     Title = "Megaminx",
                     Description = "The Megaminx, or \"Magic Dodecahedron\", was invented by several people simultaneously and produced by different manufacturing companies with slightly different designs.\r\nThe Megaminx has the shape of a dodecahedron, it has 12 central pieces, one on each face; 20 corners and 30 edges.",
                     Price = 20.99m,
-                    Category = category[3]
+                    Category = category[2]
 
                 },
 
@@ -56,10 +55,11 @@ namespace BaseDatosForm.Server.Controllers
             return Ok(products);
         }
 
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetOneProduct(int id)
         {
-            var product= products.FirstOrDefault(h => h.Id == 1);
+            var product= products.FirstOrDefault(h => h.Id == id);
             if (product == null)
             {
                 return NotFound("No product here");

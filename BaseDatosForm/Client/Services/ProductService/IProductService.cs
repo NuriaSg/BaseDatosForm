@@ -6,7 +6,7 @@ namespace BaseDatosForm.Client.Services.ProductService
     {
         List<Product> Products { get; set; }
         List<Category> Categories { get; set; }
-        Task GetCategory();
+        Task GetCategories();
         Task GetProducts();
         Task<Product> GetOneProduct(int id);
     }

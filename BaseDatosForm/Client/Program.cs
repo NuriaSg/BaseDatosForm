@@ -1,5 +1,6 @@
 global using BaseDatosForm.Client.Services.ProductService;
-global using BaseDatosForm.Client.Shared;
+global using BaseDatosForm.Shared;
+
 using BaseDatosForm.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

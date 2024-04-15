@@ -15,15 +15,18 @@ namespace BaseDatosForm.Client.Services.ProductService
         public List<Product> Products { get; set; } = new List<Product>();
         public List<Category> Categories { get; set; } = new List<Category>();
 
-        public Task GetCategory()
-        {
-            throw new NotImplementedException();
-        }
+		public Task GetCategories()
+		{
+			throw new NotImplementedException();
+		}
 
-        public Task<Product> GetOneProduct(int id)
+        public async Task<Product> GetOneProduct(int id)
         {
-            throw new NotImplementedException();
-        }
+			var result = await _http.GetFromJsonAsync<Product>($"api/product/{id}");
+			if (result != null)
+				return result;
+            throw new Exception("Product not found");
+		}
 
         public async Task GetProducts()
         {
