@@ -1,7 +1,7 @@
-﻿using BaseDatosForm.Shared;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace BaseDatosForm.Server.Controllers
 {
@@ -9,6 +9,7 @@ namespace BaseDatosForm.Server.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+
         public static List<Category> category = new List<Category>{
           new Category{Id=1, Name= "Square Cubes"},
           new Category{Id=2, Name= "Triangular Cubes"},
@@ -58,7 +59,7 @@ namespace BaseDatosForm.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetOneProduct(int id)
         {
-            var product= products.FirstOrDefault(x => x.Id == 1);
+            var product= products.FirstOrDefault(h => h.Id == 1);
             if (product == null)
             {
                 return NotFound("No product here");

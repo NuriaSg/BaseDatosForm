@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseDatosForm.Server", "BaseDatosForm\Server\BaseDatosForm.Server.csproj", "{A578CAC2-40A0-4626-B494-CE3D664CEAA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseDatosForm.Server", "BaseDatosForm\Server\BaseDatosForm.Server.csproj", "{A578CAC2-40A0-4626-B494-CE3D664CEAA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseDatosForm.Client", "BaseDatosForm\Client\BaseDatosForm.Client.csproj", "{0BE4E8B5-48BE-4CF8-899C-86FDB093AB72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseDatosForm.Client", "BaseDatosForm\Client\BaseDatosForm.Client.csproj", "{0BE4E8B5-48BE-4CF8-899C-86FDB093AB72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseDatosForm.Shared", "BaseDatosForm\Shared\BaseDatosForm.Shared.csproj", "{16371309-638E-424A-B2F4-0B6FB444FB3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseDatosForm.Shared", "BaseDatosForm\Shared\BaseDatosForm.Shared.csproj", "{16371309-638E-424A-B2F4-0B6FB444FB3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
